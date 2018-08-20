@@ -10,8 +10,8 @@ module Foursquare
       def attributes
         {
           external_id:         node.fetch("id"),
-          first_name:          node.fetch("firstName"),
-          last_name:           node.fetch("lastName"),
+          first_name:          node["firstName"],
+          last_name:           node["lastName"],
 
           city:                node["homeCity"],
           external_created_at: (epoch = node["createdAt"]).present? ? Time.at(epoch) : nil,
