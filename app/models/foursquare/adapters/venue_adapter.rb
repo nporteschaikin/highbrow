@@ -15,7 +15,7 @@ module Foursquare
           location_lng:                 node.fetch("location").fetch("lng"),
           location_country_code:        node.fetch("location").fetch("cc"),
           location_country:             node.fetch("location").fetch("country"),
-          location_formatted_address:   node.fetch("location").fetch("formattedAddress"),
+          location_formatted_address:   node.fetch("location").fetch("formattedAddress", []),
           location_address:             node.fetch("location")["address"],
           location_city:                node.fetch("location")["city"],
           location_state:               node.fetch("location")["state"],
