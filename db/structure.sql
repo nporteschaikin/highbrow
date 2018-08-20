@@ -156,7 +156,7 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.users (
     id bigint NOT NULL,
     external_id integer NOT NULL,
-    external_created_at timestamp without time zone NOT NULL,
+    external_created_at timestamp without time zone,
     token character varying,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
@@ -432,6 +432,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180819204503'),
 ('20180819204516'),
 ('20180820152026'),
-('20180820152345');
+('20180820152345'),
+('20180820153727');
 
 
