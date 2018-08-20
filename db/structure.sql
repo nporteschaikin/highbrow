@@ -71,6 +71,39 @@ ALTER SEQUENCE public.check_in_syncs_id_seq OWNED BY public.check_in_syncs.id;
 
 
 --
+-- Name: check_in_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.check_in_users (
+    id bigint NOT NULL,
+    check_in_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    relationship character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: check_in_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.check_in_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: check_in_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.check_in_users_id_seq OWNED BY public.check_in_users.id;
+
+
+--
 -- Name: check_ins; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -208,6 +241,13 @@ ALTER TABLE ONLY public.check_in_syncs ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: check_in_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_in_users ALTER COLUMN id SET DEFAULT nextval('public.check_in_users_id_seq'::regclass);
+
+
+--
 -- Name: check_ins id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -242,6 +282,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.check_in_syncs
     ADD CONSTRAINT check_in_syncs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: check_in_users check_in_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_in_users
+    ADD CONSTRAINT check_in_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -284,6 +332,20 @@ CREATE INDEX index_check_in_syncs_on_user_id ON public.check_in_syncs USING btre
 
 
 --
+-- Name: index_check_in_users_on_check_in_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_check_in_users_on_check_in_id ON public.check_in_users USING btree (check_in_id);
+
+
+--
+-- Name: index_check_in_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_check_in_users_on_user_id ON public.check_in_users USING btree (user_id);
+
+
+--
 -- Name: index_check_ins_on_check_in_sync_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -316,6 +378,22 @@ CREATE UNIQUE INDEX index_users_on_external_id ON public.users USING btree (exte
 --
 
 CREATE UNIQUE INDEX index_venues_on_external_id ON public.venues USING btree (external_id);
+
+
+--
+-- Name: check_in_users fk_rails_16ed2eee1d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_in_users
+    ADD CONSTRAINT fk_rails_16ed2eee1d FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
+
+
+--
+-- Name: check_in_users fk_rails_5c8f046428; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_in_users
+    ADD CONSTRAINT fk_rails_5c8f046428 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -353,6 +431,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180819185732'),
 ('20180819204503'),
 ('20180819204516'),
-('20180820152026');
+('20180820152026'),
+('20180820152345');
 
 
