@@ -5,9 +5,7 @@ class ExtractVenueRatingsWorker
 
   def perform
     Venue.to_sync_rating.find_each do |venue|
-      venue.update!(rating_sync_status: Venue::PENDING)
-
-      ExtractVenueRatingWorker.perform_async(venue.id)
+      venue.enqueue_rating_sync!
     end
   end
 end

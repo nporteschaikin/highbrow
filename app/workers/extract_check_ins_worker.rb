@@ -57,9 +57,11 @@ class ExtractCheckInsWorker
   end
 
   def handle_venue(node)
-    Venue.upsert!(
-      Foursquare::Adapters::VenueAdapter.new(node).attributes,
-    )
+    attributes = Foursquare::Adapters::VenueAdapter.new(node).attributes
+
+    Venue.upsert!(attributes).tap do |venue|
+      venue.enqueue_rating_sync! if venue.sync_rating?
+    end
   end
 
   def handle_user(node)
