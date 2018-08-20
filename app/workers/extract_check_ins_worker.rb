@@ -38,7 +38,7 @@ class ExtractCheckInsWorker
       venue_id:           (handle_venue(node.fetch("venue")).id if node["venue"].present?)
     )
 
-    CheckIn.upsert(attributes).tap do |check_in|
+    CheckIn.upsert!(attributes).tap do |check_in|
       node.fetch("with", []).each do |with|
         handle_check_in_user(check_in, with)
       end
@@ -46,7 +46,7 @@ class ExtractCheckInsWorker
   end
 
   def handle_check_in_user(check_in, node)
-    CheckInUser.upsert(
+    CheckInUser.upsert!(
       Foursquare::Adapters::CheckInUserAdapter.new(node).attributes.merge(
         check_in_id:  check_in.id,
         user_id:      handle_user(node).id,
@@ -55,13 +55,13 @@ class ExtractCheckInsWorker
   end
 
   def handle_venue(node)
-    Venue.upsert(
+    Venue.upsert!(
       Foursquare::Adapters::VenueAdapter.new(node).attributes,
     )
   end
 
   def handle_user(node)
-    User.upsert(
+    User.upsert!(
       Foursquare::Adapters::UserAdapter.new(node).attributes,
     )
   end
