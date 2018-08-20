@@ -15,6 +15,7 @@ gem 'active_record_upsert', '~> 0.7.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
