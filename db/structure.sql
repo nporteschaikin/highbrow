@@ -339,6 +339,13 @@ CREATE INDEX index_check_in_users_on_check_in_id ON public.check_in_users USING 
 
 
 --
+-- Name: index_check_in_users_on_check_in_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_check_in_users_on_check_in_id_and_user_id ON public.check_in_users USING btree (check_in_id, user_id);
+
+
+--
 -- Name: index_check_in_users_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -433,6 +440,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180819204516'),
 ('20180820152026'),
 ('20180820152345'),
-('20180820153727');
+('20180820153727'),
+('20180820154136');
 
 
