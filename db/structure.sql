@@ -78,7 +78,7 @@ CREATE TABLE public.check_in_users (
     id bigint NOT NULL,
     check_in_id bigint NOT NULL,
     user_id bigint NOT NULL,
-    relationship character varying NOT NULL,
+    relationship character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -441,6 +441,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820152026'),
 ('20180820152345'),
 ('20180820153727'),
-('20180820154136');
+('20180820154136'),
+('20180820154424');
 
 
