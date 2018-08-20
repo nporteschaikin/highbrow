@@ -18,7 +18,7 @@ class ExtractCheckInsWorker
     count     = checkins.fetch("count")
 
     nodes.each do |node|
-      handle_node(sync, node)
+      handle_check_in(sync, node)
     end
 
     if count > (offset + limit)
@@ -32,30 +32,38 @@ class ExtractCheckInsWorker
 
   private
 
-  def handle_node(sync, node)
-    venue = Venue.upsert(
-      Foursquare::Adapters::VenueAdapter.new(node.fetch("venue")).attributes,
+  def handle_check_in(sync, node)
+    attributes = Foursquare::Adapters::CheckInAdapter.new(node).attributes.merge(
+      check_in_sync_id:   sync.id,
+      venue_id:           (handle_venue(node.fetch("venue")).id if node["venue"].present?)
     )
 
-    check_in = CheckIn.upsert(
-      Foursquare::Adapters::CheckInAdapter.new(node).attributes.merge(
-        check_in_sync_id:   sync.id,
-        venue_id:           venue.id,
+    CheckIn.upsert(attributes).tap do |check_in|
+      node.fetch("with", []).each do |with|
+        handle_check_in_user(check_in, with)
+      end
+    end
+  end
+
+  def handle_check_in_user(check_in, node)
+    CheckInUser.upsert(
+      Foursquare::Adapters::CheckInUserAdapter.new(node).attributes.merge(
+        check_in_id:  check_in.id,
+        user_id:      handle_user(node).id,
       ),
     )
+  end
 
-    node.fetch("with", []).each do |with|
-      user = User.upsert!(
-        Foursquare::Adapters::UserAdapter.new(with).attributes,
-      )
+  def handle_venue(node)
+    Venue.upsert(
+      Foursquare::Adapters::VenueAdapter.new(node).attributes,
+    )
+  end
 
-      CheckInUser.upsert(
-        Foursquare::Adapters::CheckInUserAdapter.new(with).attributes.merge(
-          check_in_id:  check_in.id,
-          user_id:      user.id,
-        ),
-      )
-    end
+  def handle_user(node)
+    User.upsert(
+      Foursquare::Adapters::UserAdapter.new(node).attributes,
+    )
   end
 
   def handle_exception(sync, ex)
