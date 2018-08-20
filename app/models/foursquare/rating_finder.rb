@@ -12,7 +12,7 @@ module Foursquare
 
     def find
       unless element.nil?
-        element.text().split("/").first.to_f
+        element.text.split("/").first.to_f
       end
     end
 
@@ -29,11 +29,11 @@ module Foursquare
     end
 
     def response
-      client.get("/v/%s" % venue.external_id)
+      client.get(PATH % venue.external_id)
     end
 
     def client
-      Faraday.new(url: "https://foursquare.com") do |connection|
+      Faraday.new(url: URL) do |connection|
         connection.response :follow_redirects
         connection.adapter  Faraday.default_adapter
       end
