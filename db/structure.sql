@@ -158,8 +158,8 @@ CREATE TABLE public.users (
     external_id integer NOT NULL,
     external_created_at timestamp without time zone,
     token character varying,
-    first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+    first_name character varying,
+    last_name character varying,
     city character varying,
     avatar_url character varying,
     html_url character varying,
@@ -443,6 +443,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820153727'),
 ('20180820154136'),
 ('20180820154424'),
-('20180820164751');
+('20180820164751'),
+('20180820165527');
 
 
