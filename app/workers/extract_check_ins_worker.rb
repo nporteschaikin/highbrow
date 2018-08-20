@@ -1,6 +1,8 @@
 class ExtractCheckInsWorker
   include Sidekiq::Worker
 
+  sidekiq_options queue: "high"
+
   LIMIT = 250
 
   def perform(id, args = {})

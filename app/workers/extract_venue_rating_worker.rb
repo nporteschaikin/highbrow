@@ -1,6 +1,8 @@
 class ExtractVenueRatingWorker
   include Sidekiq::Worker
 
+  sidekiq_options queue: "low"
+
   def perform(id)
     venue   = Venue.find(id)
     venue.update!(rating_sync_status: Venue::SYNCING)

@@ -20,7 +20,7 @@ services:
 
   worker:
     build: .
-    command: bundle exec sidekiq -c 20
+    command: bundle exec sidekiq -c 10 -q low,1 -q default,2 -q high,4
     volumes:
       - .:/app
     depends_on:
