@@ -12,6 +12,7 @@ module Foursquare
           likes_count:         node.fetch("likes").fetch("count"),
           comments_count:      node.fetch("comments").fetch("count"),
           mayor:               node.fetch("isMayor"),
+          shout:               node["shout"],
         }
       end
 
