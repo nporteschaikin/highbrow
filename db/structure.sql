@@ -39,42 +39,10 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: check_in_syncs; Type: TABLE; Schema: public; Owner: -
+-- Name: check_in_tagged_users; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.check_in_syncs (
-    id bigint NOT NULL,
-    user_id bigint NOT NULL,
-    status character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: check_in_syncs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.check_in_syncs_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: check_in_syncs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.check_in_syncs_id_seq OWNED BY public.check_in_syncs.id;
-
-
---
--- Name: check_in_users; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.check_in_users (
+CREATE TABLE public.check_in_tagged_users (
     id bigint NOT NULL,
     check_in_id bigint NOT NULL,
     user_id bigint NOT NULL,
@@ -85,10 +53,10 @@ CREATE TABLE public.check_in_users (
 
 
 --
--- Name: check_in_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: check_in_tagged_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.check_in_users_id_seq
+CREATE SEQUENCE public.check_in_tagged_users_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -97,10 +65,10 @@ CREATE SEQUENCE public.check_in_users_id_seq
 
 
 --
--- Name: check_in_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: check_in_tagged_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.check_in_users_id_seq OWNED BY public.check_in_users.id;
+ALTER SEQUENCE public.check_in_tagged_users_id_seq OWNED BY public.check_in_tagged_users.id;
 
 
 --
@@ -109,8 +77,8 @@ ALTER SEQUENCE public.check_in_users_id_seq OWNED BY public.check_in_users.id;
 
 CREATE TABLE public.check_ins (
     id bigint NOT NULL,
-    check_in_sync_id bigint NOT NULL,
     external_id character varying NOT NULL,
+    user_id bigint NOT NULL,
     venue_id bigint,
     likes_count integer NOT NULL,
     comments_count integer NOT NULL,
@@ -138,6 +106,66 @@ CREATE SEQUENCE public.check_ins_id_seq
 --
 
 ALTER SEQUENCE public.check_ins_id_seq OWNED BY public.check_ins.id;
+
+
+--
+-- Name: import_check_ins; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.import_check_ins (
+    id bigint NOT NULL,
+    import_id bigint NOT NULL,
+    check_in_id bigint NOT NULL
+);
+
+
+--
+-- Name: import_check_ins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.import_check_ins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: import_check_ins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.import_check_ins_id_seq OWNED BY public.import_check_ins.id;
+
+
+--
+-- Name: imports; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.imports (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    status character varying NOT NULL
+);
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.imports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.imports_id_seq OWNED BY public.imports.id;
 
 
 --
@@ -234,17 +262,10 @@ ALTER SEQUENCE public.venues_id_seq OWNED BY public.venues.id;
 
 
 --
--- Name: check_in_syncs id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: check_in_tagged_users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.check_in_syncs ALTER COLUMN id SET DEFAULT nextval('public.check_in_syncs_id_seq'::regclass);
-
-
---
--- Name: check_in_users id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.check_in_users ALTER COLUMN id SET DEFAULT nextval('public.check_in_users_id_seq'::regclass);
+ALTER TABLE ONLY public.check_in_tagged_users ALTER COLUMN id SET DEFAULT nextval('public.check_in_tagged_users_id_seq'::regclass);
 
 
 --
@@ -252,6 +273,20 @@ ALTER TABLE ONLY public.check_in_users ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.check_ins ALTER COLUMN id SET DEFAULT nextval('public.check_ins_id_seq'::regclass);
+
+
+--
+-- Name: import_check_ins id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.import_check_ins ALTER COLUMN id SET DEFAULT nextval('public.import_check_ins_id_seq'::regclass);
+
+
+--
+-- Name: imports id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports ALTER COLUMN id SET DEFAULT nextval('public.imports_id_seq'::regclass);
 
 
 --
@@ -277,19 +312,11 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
--- Name: check_in_syncs check_in_syncs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: check_in_tagged_users check_in_tagged_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.check_in_syncs
-    ADD CONSTRAINT check_in_syncs_pkey PRIMARY KEY (id);
-
-
---
--- Name: check_in_users check_in_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.check_in_users
-    ADD CONSTRAINT check_in_users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.check_in_tagged_users
+    ADD CONSTRAINT check_in_tagged_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -298,6 +325,22 @@ ALTER TABLE ONLY public.check_in_users
 
 ALTER TABLE ONLY public.check_ins
     ADD CONSTRAINT check_ins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: import_check_ins import_check_ins_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.import_check_ins
+    ADD CONSTRAINT import_check_ins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imports imports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports
+    ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 
 
 --
@@ -325,45 +368,38 @@ ALTER TABLE ONLY public.venues
 
 
 --
--- Name: index_check_in_syncs_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_check_in_tagged_users_on_check_in_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_check_in_syncs_on_user_id ON public.check_in_syncs USING btree (user_id);
-
-
---
--- Name: index_check_in_users_on_check_in_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_check_in_users_on_check_in_id ON public.check_in_users USING btree (check_in_id);
+CREATE INDEX index_check_in_tagged_users_on_check_in_id ON public.check_in_tagged_users USING btree (check_in_id);
 
 
 --
--- Name: index_check_in_users_on_check_in_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_check_in_tagged_users_on_check_in_id_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_check_in_users_on_check_in_id_and_user_id ON public.check_in_users USING btree (check_in_id, user_id);
-
-
---
--- Name: index_check_in_users_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_check_in_users_on_user_id ON public.check_in_users USING btree (user_id);
+CREATE UNIQUE INDEX index_check_in_tagged_users_on_check_in_id_and_user_id ON public.check_in_tagged_users USING btree (check_in_id, user_id);
 
 
 --
--- Name: index_check_ins_on_check_in_sync_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_check_in_tagged_users_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_check_ins_on_check_in_sync_id ON public.check_ins USING btree (check_in_sync_id);
+CREATE INDEX index_check_in_tagged_users_on_user_id ON public.check_in_tagged_users USING btree (user_id);
 
 
 --
--- Name: index_check_ins_on_check_in_sync_id_and_external_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_check_ins_on_external_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_check_ins_on_check_in_sync_id_and_external_id ON public.check_ins USING btree (check_in_sync_id, external_id);
+CREATE UNIQUE INDEX index_check_ins_on_external_id ON public.check_ins USING btree (external_id);
+
+
+--
+-- Name: index_check_ins_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_check_ins_on_user_id ON public.check_ins USING btree (user_id);
 
 
 --
@@ -371,6 +407,27 @@ CREATE UNIQUE INDEX index_check_ins_on_check_in_sync_id_and_external_id ON publi
 --
 
 CREATE INDEX index_check_ins_on_venue_id ON public.check_ins USING btree (venue_id);
+
+
+--
+-- Name: index_import_check_ins_on_check_in_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_import_check_ins_on_check_in_id ON public.import_check_ins USING btree (check_in_id);
+
+
+--
+-- Name: index_import_check_ins_on_import_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_import_check_ins_on_import_id ON public.import_check_ins USING btree (import_id);
+
+
+--
+-- Name: index_imports_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_imports_on_user_id ON public.imports USING btree (user_id);
 
 
 --
@@ -388,35 +445,19 @@ CREATE UNIQUE INDEX index_venues_on_external_id ON public.venues USING btree (ex
 
 
 --
--- Name: check_in_users fk_rails_16ed2eee1d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: check_in_tagged_users fk_rails_0dbd688f66; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.check_in_users
-    ADD CONSTRAINT fk_rails_16ed2eee1d FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
-
-
---
--- Name: check_in_users fk_rails_5c8f046428; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.check_in_users
-    ADD CONSTRAINT fk_rails_5c8f046428 FOREIGN KEY (user_id) REFERENCES public.users(id);
+ALTER TABLE ONLY public.check_in_tagged_users
+    ADD CONSTRAINT fk_rails_0dbd688f66 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
 
 
 --
--- Name: check_in_syncs fk_rails_734dc3a770; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: import_check_ins fk_rails_2b9ad2f6d4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.check_in_syncs
-    ADD CONSTRAINT fk_rails_734dc3a770 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: check_ins fk_rails_760a86aec3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.check_ins
-    ADD CONSTRAINT fk_rails_760a86aec3 FOREIGN KEY (check_in_sync_id) REFERENCES public.check_in_syncs(id);
+ALTER TABLE ONLY public.import_check_ins
+    ADD CONSTRAINT fk_rails_2b9ad2f6d4 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
 
 
 --
@@ -425,6 +466,38 @@ ALTER TABLE ONLY public.check_ins
 
 ALTER TABLE ONLY public.check_ins
     ADD CONSTRAINT fk_rails_8194594aa8 FOREIGN KEY (venue_id) REFERENCES public.venues(id);
+
+
+--
+-- Name: check_ins fk_rails_b15c016c97; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_ins
+    ADD CONSTRAINT fk_rails_b15c016c97 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: imports fk_rails_b1e2154c26; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.imports
+    ADD CONSTRAINT fk_rails_b1e2154c26 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: check_in_tagged_users fk_rails_b817b41781; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.check_in_tagged_users
+    ADD CONSTRAINT fk_rails_b817b41781 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: import_check_ins fk_rails_dcb4b7de4b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.import_check_ins
+    ADD CONSTRAINT fk_rails_dcb4b7de4b FOREIGN KEY (import_id) REFERENCES public.imports(id);
 
 
 --
@@ -444,6 +517,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820154136'),
 ('20180820154424'),
 ('20180820164751'),
-('20180820165527');
+('20180820165527'),
+('20180821025558');
 
 
