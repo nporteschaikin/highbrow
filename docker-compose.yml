@@ -29,6 +29,17 @@ services:
     env_file:
       - .env
 
+  clockwork:
+    build: .
+    command: bundle exec clockwork ./config/clock.rb
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+
   postgres:
     image: postgres:9.6.6-alpine
     ports:

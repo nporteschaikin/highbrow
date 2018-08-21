@@ -45,6 +45,8 @@ GEM
     arel (8.0.0)
     bindex (0.5.0)
     builder (3.2.3)
+    clockwork (2.0.3)
+      tzinfo
     concurrent-ruby (1.0.5)
     connection_pool (2.2.2)
     crass (1.0.4)
@@ -170,6 +172,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_upsert (~> 0.7.0)
+  clockwork
   faraday
   faraday_middleware
   listen (>= 3.0.5, < 3.2)

@@ -1,7 +1,7 @@
-class ExtractVenueRatingsWorker
+class EnqueueExtractVenueRatingWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: "low"
+  sidekiq_options queue: "high"
 
   def perform
     Venue.to_sync_rating.find_each do |venue|
