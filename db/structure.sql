@@ -445,6 +445,13 @@ CREATE UNIQUE INDEX index_venues_on_external_id ON public.venues USING btree (ex
 
 
 --
+-- Name: index_venues_on_rating; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_venues_on_rating ON public.venues USING btree (rating);
+
+
+--
 -- Name: check_in_tagged_users fk_rails_0dbd688f66; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -519,6 +526,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820164751'),
 ('20180820165527'),
 ('20180821025558'),
-('20180821035619');
+('20180821035619'),
+('20180821194749');
 
 
