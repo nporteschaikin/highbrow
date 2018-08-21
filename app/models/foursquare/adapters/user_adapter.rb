@@ -16,7 +16,8 @@ module Foursquare
           city:                node["homeCity"],
           external_created_at: (epoch = node["createdAt"]).present? ? Time.at(epoch) : nil,
           check_ins_count:     node.fetch("checkins", {})["count"],
-          avatar_url:          avatar_url,
+          photo_prefix:        node.fetch("photo", {})["prefix"],
+          photo_suffix:        node.fetch("photo", {})["suffix"],
         }.compact
       end
 
