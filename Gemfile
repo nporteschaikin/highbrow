@@ -26,3 +26,6 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Added at 2018-08-21 17:55:59 -0400 by npc:
+gem "bugsnag", "~> 6.8"

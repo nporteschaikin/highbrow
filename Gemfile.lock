@@ -44,6 +44,8 @@ GEM
       tzinfo (~> 1.1)
     arel (8.0.0)
     bindex (0.5.0)
+    bugsnag (6.8.0)
+      concurrent-ruby (~> 1.0)
     builder (3.2.3)
     clockwork (2.0.3)
       tzinfo
@@ -172,6 +174,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_upsert (~> 0.7.0)
+  bugsnag (~> 6.8)
   clockwork
   faraday
   faraday_middleware
