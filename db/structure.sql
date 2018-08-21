@@ -146,7 +146,10 @@ ALTER SEQUENCE public.import_check_ins_id_seq OWNED BY public.import_check_ins.i
 CREATE TABLE public.imports (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
-    status character varying NOT NULL
+    status character varying NOT NULL,
+    finished_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -529,6 +532,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821025558'),
 ('20180821035619'),
 ('20180821194749'),
-('20180821195825');
+('20180821195825'),
+('20180821211412');
 
 
