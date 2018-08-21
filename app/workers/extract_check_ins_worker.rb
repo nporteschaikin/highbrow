@@ -9,10 +9,10 @@ class ExtractCheckInsWorker
     offset    = args.fetch("offset", 0)
     limit     = args.fetch("limit", LIMIT)
 
-    sync      = CheckInSync.find(id)
-    sync.update!(status: CheckInSync::SYNCING)
+    import    = Import.find(id)
+    import.update!(status: Import::IMPORTING)
 
-    client    = Foursquare::Client.new(sync.token)
+    client    = Foursquare::Client.new(import.token)
     body      = client.get("users/self/checkins", args.merge("offset" => offset, "limit" => limit)).body
 
     checkins  = body.fetch("response").fetch("checkins")
@@ -20,35 +20,37 @@ class ExtractCheckInsWorker
     count     = checkins.fetch("count")
 
     nodes.each do |node|
-      handle_check_in(sync, node)
+      handle_check_in(import, node)
     end
 
     if count > (offset + limit)
       self.class.perform_async(id, args.merge("offset" => offset + limit, "limit" => limit))
     else
-      sync.update!(status: CheckInSync::DONE)
+      import.update!(status: Import::DONE)
     end
   rescue => ex
-    handle_exception(sync, ex)
+    handle_exception(import, ex)
   end
 
   private
 
-  def handle_check_in(sync, node)
+  def handle_check_in(import, node)
     attributes = Foursquare::Adapters::CheckInAdapter.new(node).attributes.merge(
-      check_in_sync_id:   sync.id,
-      venue_id:           (handle_venue(node.fetch("venue")).id if node["venue"].present?)
+      user_id:  import.user.id,
+      venue_id: (handle_venue(node.fetch("venue")).id if node["venue"].present?),
     )
 
     CheckIn.upsert!(attributes).tap do |check_in|
+      ImportCheckIn.upsert!(import_id: import.id, check_in_id: check_in.id)
+
       node.fetch("with", []).each do |with|
-        handle_check_in_user(check_in, with)
+        handle_check_in_tagged_user(check_in, with)
       end
     end
   end
 
-  def handle_check_in_user(check_in, node)
-    CheckInUser.upsert!(
+  def handle_check_in_tagged_user(check_in, node)
+    CheckInTaggedUser.upsert!(
       Foursquare::Adapters::CheckInUserAdapter.new(node).attributes.merge(
         check_in_id:  check_in.id,
         user_id:      handle_user(node).id,
@@ -70,8 +72,8 @@ class ExtractCheckInsWorker
     )
   end
 
-  def handle_exception(sync, ex)
-    sync.update!(status: CheckInSync::ERRORED)
+  def handle_exception(import, ex)
+    import.update!(status: Import::ERRORED)
 
     raise ex
   end

@@ -7,7 +7,7 @@ class User < ApplicationRecord
     attributes = Foursquare::Adapters::UserAdapter.new(response.body.fetch("response").fetch("user")).attributes
 
     upsert(attributes.merge(token: token)).tap do |user|
-      CheckInSync.create!(user_id: user.id)
+      Import.create!(user_id: user.id)
     end
   end
 end

@@ -1,6 +1,6 @@
 class CheckIn < ApplicationRecord
-  upsert_keys %w[check_in_sync_id external_id]
+  upsert_keys %w[external_id]
 
-  belongs_to :check_in_sync
+  belongs_to :user
   belongs_to :venue, optional: true
 end
