@@ -1,5 +1,7 @@
 class Import < ApplicationRecord
   belongs_to :user
+  has_many :import_check_ins
+  has_many :check_ins, through: :import_check_ins
 
   after_create :enqueue
 

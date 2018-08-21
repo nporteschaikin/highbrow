@@ -26,6 +26,9 @@ class ExtractCheckInsWorker
     if count > (offset + limit)
       self.class.perform_async(id, args.merge("offset" => offset + limit, "limit" => limit))
     else
+      # TODO: Improve this by making it one query.
+      import.user.check_ins.where.not(id: import.check_ins.pluck(:id)).delete_all
+
       import.update!(status: Import::DONE, finished_at: Time.now)
     end
   rescue => ex

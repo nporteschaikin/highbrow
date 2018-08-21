@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   upsert_keys %w[external_id]
 
+  has_many :check_ins
   has_many :imports
 
   # Only periodically import check-ins for users that:
