@@ -460,7 +460,7 @@ CREATE INDEX index_venues_on_rating ON public.venues USING btree (rating);
 --
 
 ALTER TABLE ONLY public.check_in_tagged_users
-    ADD CONSTRAINT fk_rails_0dbd688f66 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
+    ADD CONSTRAINT fk_rails_0dbd688f66 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id) ON DELETE CASCADE;
 
 
 --
@@ -468,7 +468,7 @@ ALTER TABLE ONLY public.check_in_tagged_users
 --
 
 ALTER TABLE ONLY public.import_check_ins
-    ADD CONSTRAINT fk_rails_2b9ad2f6d4 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id);
+    ADD CONSTRAINT fk_rails_2b9ad2f6d4 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id) ON DELETE CASCADE;
 
 
 --
@@ -484,7 +484,7 @@ ALTER TABLE ONLY public.check_ins
 --
 
 ALTER TABLE ONLY public.check_ins
-    ADD CONSTRAINT fk_rails_b15c016c97 FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT fk_rails_b15c016c97 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -492,7 +492,7 @@ ALTER TABLE ONLY public.check_ins
 --
 
 ALTER TABLE ONLY public.imports
-    ADD CONSTRAINT fk_rails_b1e2154c26 FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT fk_rails_b1e2154c26 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -500,7 +500,7 @@ ALTER TABLE ONLY public.imports
 --
 
 ALTER TABLE ONLY public.check_in_tagged_users
-    ADD CONSTRAINT fk_rails_b817b41781 FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT fk_rails_b817b41781 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -508,7 +508,7 @@ ALTER TABLE ONLY public.check_in_tagged_users
 --
 
 ALTER TABLE ONLY public.import_check_ins
-    ADD CONSTRAINT fk_rails_dcb4b7de4b FOREIGN KEY (import_id) REFERENCES public.imports(id);
+    ADD CONSTRAINT fk_rails_dcb4b7de4b FOREIGN KEY (import_id) REFERENCES public.imports(id) ON DELETE CASCADE;
 
 
 --
@@ -533,6 +533,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821035619'),
 ('20180821194749'),
 ('20180821195825'),
-('20180821211412');
+('20180821211412'),
+('20180821214314');
 
 
