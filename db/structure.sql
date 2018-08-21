@@ -84,6 +84,7 @@ CREATE TABLE public.check_ins (
     comments_count integer NOT NULL,
     mayor boolean NOT NULL,
     external_created_at timestamp without time zone NOT NULL,
+    shout character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -527,6 +528,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820165527'),
 ('20180821025558'),
 ('20180821035619'),
-('20180821194749');
+('20180821194749'),
+('20180821195825');
 
 
