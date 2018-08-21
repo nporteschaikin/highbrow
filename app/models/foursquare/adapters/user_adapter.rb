@@ -24,12 +24,6 @@ module Foursquare
       private
 
       attr_reader :node
-
-      def avatar_url
-        if (photo = node["photo"]).present?
-          "%s%s%s" % [photo.fetch("prefix"), SIZE, photo.fetch("suffix")]
-        end
-      end
     end
   end
 end
