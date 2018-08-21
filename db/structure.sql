@@ -189,9 +189,9 @@ CREATE TABLE public.users (
     first_name character varying,
     last_name character varying,
     city character varying,
-    avatar_url character varying,
-    html_url character varying,
     check_ins_count integer,
+    photo_prefix character varying,
+    photo_suffix character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -518,6 +518,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180820154424'),
 ('20180820164751'),
 ('20180820165527'),
-('20180821025558');
+('20180821025558'),
+('20180821035619');
 
 
