@@ -26,7 +26,7 @@ class ExtractCheckInsWorker
     if count > (offset + limit)
       self.class.perform_async(id, args.merge("offset" => offset + limit, "limit" => limit))
     else
-      import.update!(status: Import::DONE)
+      import.update!(status: Import::DONE, finished_at: Time.now)
     end
   rescue => ex
     handle_exception(import, ex)
