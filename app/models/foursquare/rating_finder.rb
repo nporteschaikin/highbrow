@@ -35,8 +35,8 @@ module Foursquare
     def client
       Faraday.new(url: URL) do |connection|
         connection.response :follow_redirects
-        connection.adapter  Faraday.default_adapter
         connection.use      Faraday::Response::RaiseError
+        connection.adapter  Faraday.default_adapter
       end
     end
   end
