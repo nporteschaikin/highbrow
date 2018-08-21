@@ -1,6 +1,6 @@
 module Foursquare
   module Adapters
-    class CheckInUserAdapter
+    class CheckInTaggedUserAdapter
       def initialize(node)
         @node = node
       end

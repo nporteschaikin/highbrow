@@ -32,7 +32,6 @@ module Foursquare
           #external_users_count:         node.fetch("stats").fetch("usersCount"),
           #external_check_ins_count:     node.fetch("stats").fetch("checkinsCount"),
 
-          rating:                       node["rating"],
           #rating_color:                 node["ratingColor"],
           #rating_signals:               node["ratingSignals"],
         }

@@ -51,7 +51,7 @@ class ExtractCheckInsWorker
 
   def handle_check_in_tagged_user(check_in, node)
     CheckInTaggedUser.upsert!(
-      Foursquare::Adapters::CheckInUserAdapter.new(node).attributes.merge(
+      Foursquare::Adapters::CheckInTaggedUserAdapter.new(node).attributes.merge(
         check_in_id:  check_in.id,
         user_id:      handle_user(node).id,
       ),

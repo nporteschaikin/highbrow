@@ -17,7 +17,7 @@ module Foursquare
           external_created_at: (epoch = node["createdAt"]).present? ? Time.at(epoch) : nil,
           check_ins_count:     node.fetch("checkins", {})["count"],
           avatar_url:          avatar_url,
-        }
+        }.compact
       end
 
       private
