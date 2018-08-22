@@ -13,9 +13,11 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'oauth2'
 gem 'active_record_upsert', '~> 0.7.0'
-gem 'uglifier', '>= 1.3.0'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'slim'
+gem 'uglifier', '>= 1.3.0'
+gem 'bootstrap', '~> 4.1.2'
 gem 'newrelic_rpm'
 
 group :development do
