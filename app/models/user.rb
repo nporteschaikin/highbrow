@@ -10,7 +10,8 @@ class User < ApplicationRecord
   scope :to_import, -> {
     joins("left outer join imports a on a.user_id = users.id and a.created_at > now() - interval '6 hours'").
     joins("left outer join imports b on b.user_id = users.id").
-    where("token is not null and a.id is null and b.id is not null")
+    where("token is not null and a.id is null and b.id is not null").
+    group("users.id")
   }
 
   def self.upsert_from_token(token)
