@@ -8,6 +8,7 @@ class ExtractCheckInsWorker
   def perform(id, args = {})
     offset    = args.fetch("offset", 0)
     limit     = args.fetch("limit", LIMIT)
+    ids       = args.fetch("ids", [])
 
     import    = Import.find(id)
     import.update!(status: Import::IMPORTING)
@@ -28,6 +29,7 @@ class ExtractCheckInsWorker
     else
       # TODO: Improve this by making it one query.
       import.user.check_ins.where.not(id: import.check_ins.pluck(:id)).delete_all
+      import.import_check_ins.destroy_all
 
       import.update!(status: Import::DONE, finished_at: Time.now)
     end
