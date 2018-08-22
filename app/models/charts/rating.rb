@@ -11,6 +11,11 @@ module Charts
               data: ratings.map(&:p50_rating),
               fill: false,
             },
+            {
+              label: "90th percentile",
+              data: ratings.map(&:p90_rating),
+              fill: false,
+            },
           ],
         }
       }
@@ -27,7 +32,8 @@ module Charts
 
         select
           calendar.period,
-          round(percentile_cont(0.5) within group (order by venues.rating asc)::numeric, 2)::float as p50_rating
+          round(percentile_cont(0.5) within group (order by venues.rating asc)::numeric, 2)::float as p50_rating,
+          round(percentile_cont(0.9) within group (order by venues.rating asc)::numeric, 2)::float as p90_rating
         from calendar
         left outer join check_ins
           on date_trunc('month', check_ins.external_created_at) = calendar.period
