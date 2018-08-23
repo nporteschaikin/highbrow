@@ -25,16 +25,11 @@ module Charts
 
     def ratings
       @ratings ||= Query.new(<<~SQL, params.merge(user_id: user.id))
-        with calendar as (
-          select date_trunc('month', cast(n as timestamp)) period
-          from generate_series(now() - interval '5 years', now(), '1 month') n
-        )
-
         select
           calendar.period,
           round(percentile_cont(0.5) within group (order by venues.rating asc)::numeric, 2)::float as p50_rating,
           round(percentile_cont(0.9) within group (order by venues.rating asc)::numeric, 2)::float as p90_rating
-        from calendar
+        from calendar((now() - interval '5 years')::date, current_date, 'month')
         left outer join check_ins
           on date_trunc('month', check_ins.external_created_at) = calendar.period
         left outer join venues
