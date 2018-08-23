@@ -22,6 +22,18 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: calendar(date, date, character); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.calendar(start_date date, end_date date, step character) RETURNS TABLE(period date)
+    LANGUAGE sql STABLE
+    AS $$
+  select date_trunc(calendar.step, n::timestamp)::date as period
+  from generate_series(calendar.start_date, calendar.end_date, ('1 ' || calendar.step)::interval) n
+$$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -534,6 +546,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821194749'),
 ('20180821195825'),
 ('20180821211412'),
-('20180821214314');
+('20180821214314'),
+('20180823031413');
 
 
