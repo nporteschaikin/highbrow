@@ -4,7 +4,7 @@ javascript:
   window.onload = function() {
     var ctx = document.getElementById("canvas").getContext("2d");
 
-    $.getJSON('#{check_ins.scatter_query_path}', function(rows) {
+    $.getJSON('#{venues.scatter_query_path}', function(rows) {
       var data = [];
       var radiuses = [];
 
@@ -12,11 +12,11 @@ javascript:
         var row = rows[i];
 
         data.push({
-          x: row.visits_count,
+          x: row.check_ins_count,
           y: row.rating,
         });
 
-        radiuses.push((row.tagged_users_count + 1) * 2);
+        //radiuses.push((row.tagged_users_count + 1) * 2);
       }
 
       new Chart(ctx, {
@@ -37,7 +37,7 @@ javascript:
               },
               label: function(point) {
                 var row = rows[point.index];
-                return row.visits_count + " check-ins";
+                return row.check_ins_count + " check-ins";
               },
             },
           },

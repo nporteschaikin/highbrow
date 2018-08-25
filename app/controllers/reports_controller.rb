@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   ReportNotFound = Class.new(StandardError)
 
   VALID_REPORTS = %w[
-    check-ins
+    venues
   ]
 
   def show

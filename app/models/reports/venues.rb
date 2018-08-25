@@ -1,9 +1,9 @@
 module Reports
-  class CheckIns < Report
+  class Venues < Report
     include Rails.application.routes.url_helpers
 
     def scatter_query_path
-      query_path(Queries::CheckInScatter.path, args)
+      query_path(Queries::VenuesScatter.path, args)
     end
   end
 end

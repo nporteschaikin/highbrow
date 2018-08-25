@@ -14,7 +14,6 @@ module Queries
     join venues
       on venues.id = check_ins.venue_id
     where check_ins.user_id = :user_id
-      and check_ins.external_created_at > now() - interval '3 years'
     group by users.id
     order by count(*) desc
     limit 10
