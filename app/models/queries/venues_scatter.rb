@@ -9,6 +9,7 @@ module Queries
       on venues.id = check_ins.venue_id
       and venues.rating is not null
     where check_ins.user_id = :user_id
+      and venues.rating is not null
     group by venues.id
   SQL
 end
