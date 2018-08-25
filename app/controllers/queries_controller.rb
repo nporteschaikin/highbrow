@@ -6,6 +6,7 @@ class QueriesController < ApplicationController
   VALID_QUERIES = %w[
     check-in-scatter
     most-tagged-users
+    popular-venues-with-friends
   ]
 
   def show
