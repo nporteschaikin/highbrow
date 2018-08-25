@@ -16,7 +16,7 @@ javascript:
           y: row.rating,
         });
 
-        //radiuses.push((row.tagged_users_count + 1) * 2);
+        radiuses.push((row.distinct_tagged_users_count + 1) * 2);
       }
 
       new Chart(ctx, {
