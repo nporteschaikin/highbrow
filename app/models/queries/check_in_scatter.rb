@@ -19,6 +19,6 @@ module Queries
       on venues.id = a.venue_id
       and venues.rating is not null
     where a.user_id = :user_id
-      and a.external_created_at > now() - interval '1 year'
+      and a.external_created_at > now() - interval '3 years'
   SQL
 end
