@@ -7,4 +7,8 @@ html
     = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js'
     = javascript_include_tag 'application'
   body
-    = yield
+    .container-fluid
+      .row
+        .col-12.col-md-3.col-xl-2.left-nav
+        main.col-12.col-md-9.col-xl-10
+          = yield

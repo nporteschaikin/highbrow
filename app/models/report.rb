@@ -1,17 +1,14 @@
 class Report
-  def self.slug
-    name.demodulize.underscore
-  end
-
-  def initialize(user)
+  def initialize(user, args = {})
     @user = user
+    @args = args
   end
 
   def to_partial_path
-    "reports/%s" % self.class.slug
+    "reports/%s" % self.class.name.demodulize.underscore
   end
 
   protected
 
-  attr_reader :user, :params
+  attr_reader :user, :args
 end

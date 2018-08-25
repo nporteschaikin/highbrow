@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+@import 'bootstrap';
+
+.left-nav {
+  border-right: 1px solid rgba(0, 0, 0, .1);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
