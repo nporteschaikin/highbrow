@@ -3,6 +3,7 @@ module Queries
     select
       venues.name,
       venues.rating,
+      venues.categories,
       count(*) check_ins_count,
       (
         select count(distinct(check_in_tagged_users.user_id))

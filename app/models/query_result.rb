@@ -7,11 +7,19 @@ class QueryResult
     @args = args
   end
 
-  delegate :each, to: :result
+  def each
+    result.each do |row|
+      yield attributes_builder.build_from_database(row).to_h
+    end
+  end
 
   private
 
   attr_reader :definition, :user, :args
+
+  def attributes_builder
+    @attributes_builder ||= ActiveRecord::AttributeSet::Builder.new(result.column_types.dup)
+  end
 
   def result
     @result ||= ActiveRecord::Base.connection.select_all(
