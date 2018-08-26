@@ -267,6 +267,38 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: venue_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.venue_categories (
+    id bigint NOT NULL,
+    venue_id bigint NOT NULL,
+    category_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: venue_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.venue_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: venue_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.venue_categories_id_seq OWNED BY public.venue_categories.id;
+
+
+--
 -- Name: venues; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -354,6 +386,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: venue_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.venue_categories ALTER COLUMN id SET DEFAULT nextval('public.venue_categories_id_seq'::regclass);
+
+
+--
 -- Name: venues id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -422,6 +461,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: venue_categories venue_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.venue_categories
+    ADD CONSTRAINT venue_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -510,6 +557,27 @@ CREATE UNIQUE INDEX index_users_on_external_id ON public.users USING btree (exte
 
 
 --
+-- Name: index_venue_categories_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_venue_categories_on_category_id ON public.venue_categories USING btree (category_id);
+
+
+--
+-- Name: index_venue_categories_on_venue_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_venue_categories_on_venue_id ON public.venue_categories USING btree (venue_id);
+
+
+--
+-- Name: index_venue_categories_on_venue_id_and_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_venue_categories_on_venue_id_and_category_id ON public.venue_categories USING btree (venue_id, category_id);
+
+
+--
 -- Name: index_venues_on_external_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -532,11 +600,27 @@ ALTER TABLE ONLY public.check_in_tagged_users
 
 
 --
+-- Name: venue_categories fk_rails_1a66f97c7e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.venue_categories
+    ADD CONSTRAINT fk_rails_1a66f97c7e FOREIGN KEY (venue_id) REFERENCES public.venues(id);
+
+
+--
 -- Name: import_check_ins fk_rails_2b9ad2f6d4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.import_check_ins
     ADD CONSTRAINT fk_rails_2b9ad2f6d4 FOREIGN KEY (check_in_id) REFERENCES public.check_ins(id) ON DELETE CASCADE;
+
+
+--
+-- Name: venue_categories fk_rails_678164640c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.venue_categories
+    ADD CONSTRAINT fk_rails_678164640c FOREIGN KEY (category_id) REFERENCES public.categories(id);
 
 
 --
@@ -604,6 +688,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821211412'),
 ('20180821214314'),
 ('20180823031413'),
-('20180826154304');
+('20180826154304'),
+('20180826160047');
 
 
