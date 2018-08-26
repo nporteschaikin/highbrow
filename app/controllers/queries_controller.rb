@@ -7,6 +7,7 @@ class QueriesController < ApplicationController
     most-tagged-users
     popular-venues-with-friends
     top-venue-categories
+    top-venue-locations
     venues-scatter
   ]
 

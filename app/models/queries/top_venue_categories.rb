@@ -15,7 +15,6 @@ module Queries
       from check_ins
       join venues
         on venues.id = check_ins.venue_id
-        and venues.rating is not null
       where check_ins.user_id = :user_id
       group by venues.id
       order by count(*) desc

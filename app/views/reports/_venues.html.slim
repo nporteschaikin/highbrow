@@ -2,4 +2,8 @@
 
 .row
   .col-6
+    h4 Top categories
     = react_component "TopVenueCategories", path: venues.categories_query_path
+  .col-6
+    h4 Top locations
+    = react_component "TopVenueLocations", path: venues.locations_query_path

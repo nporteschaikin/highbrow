@@ -9,5 +9,9 @@ module Reports
     def categories_query_path
       query_path(Queries::TopVenueCategories.path, args)
     end
+
+    def locations_query_path
+      query_path(Queries::TopVenueLocations.path, args)
+    end
   end
 end
