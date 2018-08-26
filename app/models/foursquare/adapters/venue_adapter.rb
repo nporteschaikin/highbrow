@@ -9,7 +9,7 @@ module Foursquare
         {
           external_id:                  node.fetch("id"),
           name:                         node.fetch("name"),
-          categories:                   node.fetch("categories").map { |category| category.fetch("name") },
+          categories:                   [],
 
           location_lat:                 node.fetch("location").fetch("lat"),
           location_lng:                 node.fetch("location").fetch("lng"),

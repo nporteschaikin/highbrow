@@ -68,7 +68,21 @@ class ExtractCheckInsWorker
 
     Venue.upsert!(attributes).tap do |venue|
       venue.enqueue_rating_sync! if venue.sync_rating?
+
+      node.fetch("categories").each do |category|
+        handle_venue_category(venue, category)
+      end
     end
+  end
+
+  def handle_venue_category(venue, node)
+    attributes = Foursquare::Adapters::CategoryAdapter.new(node).attributes
+    category = Category.upsert!(attributes)
+
+    VenueCategory.upsert!(
+      venue_id: venue.id,
+      category_id: category.id,
+    )
   end
 
   def handle_user(node)
