@@ -24,7 +24,7 @@ class TopVenueCategories extends React.Component {
   render () {
     if (this.state.isReady) {
       return (
-        <table className="top-venue-categories">
+        <table className="table table-borderless">
           <thead>
             <tr>
               <td>Place</td>
@@ -37,7 +37,7 @@ class TopVenueCategories extends React.Component {
               return (
                 <tr key={row.name}>
                   <td>
-                    <span className="top-venue-categories-avatar">
+                    <span className="bg-info d-inline-block rounded-circle">
                       <img src={row.icon_prefix + 32 + row.icon_suffix} />
                     </span>
                     {row.name}
