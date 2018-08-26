@@ -306,7 +306,6 @@ CREATE TABLE public.venues (
     id bigint NOT NULL,
     external_id character varying NOT NULL,
     name character varying NOT NULL,
-    categories character varying[] NOT NULL,
     location_lat double precision NOT NULL,
     location_lng double precision NOT NULL,
     location_country_code character varying NOT NULL,
@@ -689,6 +688,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180821214314'),
 ('20180823031413'),
 ('20180826154304'),
-('20180826160047');
+('20180826160047'),
+('20180826161843');
 
 
