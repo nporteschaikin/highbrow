@@ -55,3 +55,13 @@ services:
       - "yes"
     volumes:
       - redis:/data
+
+  webpacker:
+    build: .
+    command: ./bin/webpack-dev-server
+    volumes:
+      - .:/webpacker-example-app
+    ports:
+      - '3035:3035'
+    env_file:
+      - .env

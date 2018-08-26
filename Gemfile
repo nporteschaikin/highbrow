@@ -19,6 +19,8 @@ gem 'slim'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.1.2'
+gem 'webpacker', '~> 3.5'
+gem 'react-rails'
 gem 'newrelic_rpm'
 
 group :development do
