@@ -22,3 +22,17 @@
   position: sticky;
   top: 0;
 }
+
+.top-venue-categories {
+  width: 100%;
+}
+
+.top-venue-categories-avatar {
+  display: inline-block;
+  background: #ddd;
+
+  img {
+    border-radius: 16px;
+    display: block;
+  }
+}

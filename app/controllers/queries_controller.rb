@@ -4,9 +4,9 @@ class QueriesController < ApplicationController
   QueryNotFound = Class.new(StandardError)
 
   VALID_QUERIES = %w[
-    category-pie
     most-tagged-users
     popular-venues-with-friends
+    top-venue-categories
     venues-scatter
   ]
 
