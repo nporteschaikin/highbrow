@@ -1,1 +1,11 @@
-p Syncing has commenced!
+.row
+  .col-12
+    = react_component "VenuesScatter", path: query_path("venues-scatter")
+
+.row
+  .col-6
+    h4 Top categories
+    = react_component "TopVenueCategories", path: query_path("top-venue-categories")
+  .col-6
+    h4 Top locations
+    = react_component "TopVenueLocations", path: query_path("top-venue-locations")

@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get "sessions/callback", to: "sessions#callback"
 
   resources :queries, only: %[show]
-  resources :reports, only: %[show]
 
   mount Sidekiq::Web => '/sidekiq'
 end
