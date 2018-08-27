@@ -34,7 +34,7 @@ class TopVenueLocations extends React.Component {
   render () {
     if (this.state.isReady) {
       return (
-        <table className="table table-borderless">
+        <table className="table table-bordered table-striped">
           <thead>
             <tr>
               <td>Location</td>

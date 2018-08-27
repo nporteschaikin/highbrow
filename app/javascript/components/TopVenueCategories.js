@@ -24,10 +24,10 @@ class TopVenueCategories extends React.Component {
   render () {
     if (this.state.isReady) {
       return (
-        <table className="table table-borderless">
+        <table className="table table-bordered table-striped">
           <thead>
             <tr>
-              <td>Place</td>
+              <td>Category</td>
               <td>Visits</td>
               <td>Median rating</td>
             </tr>
@@ -36,12 +36,7 @@ class TopVenueCategories extends React.Component {
             {this.state.rows.map((row) => {
               return (
                 <tr key={row.name}>
-                  <td>
-                    <span className="bg-info d-inline-block rounded-circle">
-                      <img src={row.icon_prefix + 32 + row.icon_suffix} />
-                    </span>
-                    {row.name}
-                  </td>
+                  <td>{row.name}</td>
                   <td>{row.check_ins_count}</td>
                   <td>{row.p50_rating}</td>
                 </tr>

@@ -1,11 +1,11 @@
-.row
+.row.mb-3
   .col-12
     = react_component "VenuesScatter", path: query_path("venues-scatter")
 
-.row
+.row.mb-3
   .col-6
-    h4 Top categories
+    h4.mb-3 Top categories
     = react_component "TopVenueCategories", path: query_path("top-venue-categories")
   .col-6
-    h4 Top locations
+    h4.mb-3 Top locations
     = react_component "TopVenueLocations", path: query_path("top-venue-locations")
