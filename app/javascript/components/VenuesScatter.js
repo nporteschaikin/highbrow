@@ -18,12 +18,6 @@ class VenuesScatter extends React.Component {
         this.setState({
           isReady: true,
           rows: rows,
-          data: {
-            datasets: [{
-              data: rows.map((row) => { return { x: row.check_ins_count, y: row.rating } }),
-              pointRadius: rows.map(row => (row.distinct_tagged_users_count + 1) * 2),
-            }],
-          },
         });
       });
   }
@@ -33,6 +27,8 @@ class VenuesScatter extends React.Component {
 
     return {
       datasets: [{
+        backgroundColor: Color("rgb(54, 162, 235)").alpha(0.2).rgbString(),
+        borderColor: "rgb(54, 162, 235)",
         data: rows.map((row) => {
           return {
             x: row.check_ins_count,
