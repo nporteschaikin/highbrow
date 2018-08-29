@@ -5,7 +5,7 @@ module Queries
       categories.icon_prefix,
       categories.icon_suffix,
       sum(venues.check_ins_count)::integer check_ins_count,
-      percentile_cont(0.5) within group (order by venues.rating) p50_rating
+      format_rating(percentile_cont(0.5) within group (order by venues.rating)) p50_rating
     from (
       select
         venues.id,

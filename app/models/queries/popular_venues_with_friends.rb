@@ -7,7 +7,7 @@ module Queries
       users.photo_suffix,
       venues.name,
       venues.categories,
-      venues.rating,
+      format_rating(venues.rating),
       count(*)
     from check_ins
     join check_in_tagged_users

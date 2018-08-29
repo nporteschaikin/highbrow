@@ -5,7 +5,7 @@ module Queries
       state,
       country_code,
       count(*) venues_count,
-      percentile_cont(0.5) within group (order by locations.rating) p50_rating
+      format_rating(percentile_cont(0.5) within group (order by locations.rating)) p50_rating
     from (
       select distinct on (venues.id)
         venues.id,

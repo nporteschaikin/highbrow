@@ -2,7 +2,7 @@ module Queries
   VenuesScatter = Query.new <<~SQL
     select
       venues.name,
-      venues.rating,
+      format_rating(venues.rating) rating,
       count(*) check_ins_count,
       (
         select count(distinct(check_in_tagged_users.user_id))
