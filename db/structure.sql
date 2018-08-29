@@ -34,6 +34,19 @@ CREATE FUNCTION public.calendar(start_date date, end_date date, step character) 
 $$;
 
 
+--
+-- Name: format_rating(double precision); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.format_rating(rating double precision) RETURNS numeric
+    LANGUAGE plpgsql
+    AS $$
+begin
+  return round(rating::numeric, 1)::numeric;
+end;
+$$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -689,6 +702,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180823031413'),
 ('20180826154304'),
 ('20180826160047'),
-('20180826161843');
+('20180826161843'),
+('20180829025008');
 
 
